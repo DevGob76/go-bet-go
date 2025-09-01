@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Go Bet Go - Paris Sportifs Intelligents</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Page d'accueil / Login -->
+    <div id="loginPage" class="login-page">
+        <div class="login-container">
+            <div class="language-selector">
+                <select id="language-select">
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="en">🇬🇧 English</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                </select>
+            </div>
+            <div class="logo">🎯</div>
+            <h1 class="app-title">GO BET GO</h1>
+            <p style="margin-bottom: 30px; color: #7f8c8d; line-height: 1.4;" id="subtitle">Prédictions intelligentes et répartition stratégique</p>
+            <input type="text" id="nameInput" class="name-input" placeholder="Entrez votre nom" maxlength="50">
+            <input type="tel" id="phoneInput" class="phone-input" placeholder="Entrez votre numéro de téléphone" maxlength="15">
+            <button class="btn" onclick="login()" id="btn-login">Accéder à l'application</button>
+        </div>
+    </div>
+
+    <!-- Page principale avec menus -->
+    <div id="mainPage" class="page">
+        <div class="page-header">
+            <h1>🎯 GO BET GO</h1>
+            <p id="header-subtitle">Tableau de bord principal</p>
+        </div>
+        <div class="page-content">
+            <div class="main-menu">
+                <div class="menu-item" onclick="showPage('predictionsPage')">
+                    <div class="menu-icon">🤖</div>
+                    <span id="menu-predictions">Prédictions IA</span>
+                </div>
+                <div class="menu-item" onclick="showPage('distributionPage')">
+                    <div class="menu-icon">💰</div>
+                    <span id="menu-distribution">Répartition des Mises</span>
+                </div>
+                <div class="menu-item" onclick="showPage('resultsPage')">
+                    <div class="menu-icon">✅</div>
+                    <span id="menu-results">Résultats & Statistiques</span>
+                </div>
+                <div class="menu-item" onclick="showPage('balancePage')">
+                    <div class="menu-icon">📈</div>
+                    <span id="menu-balance">Bilan P&L</span>
+                </div>
+                <div class="menu-item" onclick="showPage('archivesPage')">
+                    <div class="menu-icon">📚</div>
+                    <span id="menu-archives">Archives</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page de prédictions -->
+    <div id="predictionsPage" class="page">
+        <div class="navigation">
+            <div class="nav-title" id="title-ia">Prédictions IA</div>
+            <button class="back-btn" onclick="showPage('mainPage')">← Retour</button>
+        </div>
+        <div class="page-content">
+            <div class="ai-section">
+                <div class="ai-links">
+                    <div class="ai-link" onclick="window.open('https://www.chatgpt.com/', '_blank')" id="link-chatgpt">IA ChatGPT</div>
+                    <div class="ai-link" onclick="window.open('https://www.mistral.ai/', '_blank')" id="link-mistral">IA Mistral</div>
+                    <div class="ai-link" onclick="window.open('https://www.claude.ai/', '_blank')" id="link-claude">IA Claude Sonnet 4</div>
+                    <div class="ai-link" onclick="window.open('https://www.deepseek.com/', '_blank')" id="link-deepseek">IA Deepseek</div>
+                    <div class="ai-link" onclick="window.open('https://gemini.google.com/', '_blank')" id="link-gemini">IA Gemini</div>
+                    <div class="ai-link" onclick="window.open('https://copilot.microsoft.com/', '_blank')" id="link-copilot">IA Copilot</div>
+                </div>
+                <div class="ai-response">
+                    <h3 id="title-perplexity">Réponse IA Perplexity</h3>
+                    <div id="perplexityResponse" contenteditable="true" style="white-space: pre-wrap;"></div>
+                </div>
+                <div class="ai-response">
+                    <h3 id="title-chatgpt">Réponse IA ChatGPT</h3>
+                    <div id="chatgptResponse" contenteditable="true" style="white-space: pre-wrap;"></div>
+                </div>
+                <div class="ai-response">
+                    <h3 id="title-gemini">Réponse IA Gemini</h3>
+                    <div id="geminiResponse" contenteditable="true" style="white-space: pre-wrap;"></div>
+                </div>
+                <div class="ai-response">
+                    <h3 id="title-copilot">Réponse IA Copilot</h3>
+                    <div id="copilotResponse" contenteditable="true" style="white-space: pre-wrap;"></div>
+                </div>
+                <div class="synthesis-results">
+                    <h3 id="title-synthesis">Résultat Synthèse IA</h3>
+                    <button class="btn" onclick="synthesizeResults()" id="btn-synthesize">Synthétiser les résultats</button>
+                    <div id="synthesisResults"></div>
+                    <button class="btn" onclick="archiveResults()" id="btn-archive-results">Archiver résultat prédictions du jour</button>
+                </div>
+                <div class="archive-results">
+                    <h3 id="title-archived-results">Résultats Archivés</h3>
+                    <select id="archiveDropdown" class="dropdown" onchange="displayArchivedResults()">
+                        <option value="">Sélectionnez un résultat archivé</option>
+                    </select>
+                    <div id="archivedResults"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page de répartition des mises -->
+    <div id="distributionPage" class="page">
+        <div class="navigation">
+            <div class="nav-title" id="title-distribution">Répartition des Mises</div>
+            <button class="back-btn" onclick="showPage('mainPage')">← Retour</button>
+        </div>
+        <div class="page-content">
+            <div class="budget-section">
+                <div class="input-group">
+                    <label for="budgetInput" id="label-budget">Budget</label>
+                    <input type="number" id="budgetInput" placeholder="Budget (ex: 100)" class="dropdown" oninput="calculateBets()">
+                </div>
+                <div class="input-group">
+                    <label for="tauxNetInput" id="label-taux-net">Taux Net (%)</label>
+                    <input type="number" id="tauxNetInput" placeholder="Taux Net (ex: 10)" class="dropdown" oninput="calculateBets()">
+                </div>
+                <div class="input-group">
+                    <label for="totalToDistribute" id="label-total-distribute">Total à Répartir (€)</label>
+                    <input type="number" id="totalToDistribute" readonly>
+                </div>
+                <div class="input-group">
+                    <label for="totalPronostic" id="label-total-pronostic">Nombre de Pronostics</label>
+                    <input type="number" id="totalPronostic" readonly>
+                </div>
+            </div>
+            <table id="betsTable">
+                <thead>
+                    <tr>
+                        <th id="th-match">Match</th>
+                        <th id="th-odd">Cote</th>
+                        <th id="th-amount">Montant (€)</th>
+                        <th id="th-status">Statut</th>
+                    </tr>
+                </thead>
+                <tbody id="betsTableBody">
+                    <!-- Les lignes seront ajoutées dynamiquement -->
+                </tbody>
+            </table>
+            <button class="btn" onclick="addBetRow()" id="btn-add-bet">Ajouter un match</button>
+            <button class="btn" onclick="archiveRepartition()" id="btn-archive-repartition">Archiver Répartition</button>
+        </div>
+    </div>
+
+    <!-- Page des résultats -->
+    <div id="resultsPage" class="page">
+        <div class="navigation">
+            <div class="nav-title" id="title-results">Résultats & Statistiques</div>
+            <button class="back-btn" onclick="showPage('mainPage')">← Retour</button>
+        </div>
+        <div class="page-content">
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th id="th-date">Date</th>
+                            <th id="th-match">Match</th>
+                            <th id="th-odd">Cote</th>
+                            <th id="th-amount">Mise (€)</th>
+                            <th id="th-status">Statut</th>
+                            <th id="th-profit">Profit (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                        <!-- Les lignes seront ajoutées dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 20px; color: white;">
+                <p id="stats-wins">Victoires : <span id="winCount">0</span></p>
+                <p id="stats-losses">Défaites : <span id="lossCount">0</span></p>
+                <p id="stats-void">Nuls : <span id="voidCount">0</span></p>
+                <p id="stats-total-profit">Profit Total : <span id="totalProfit">0.00</span> €</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page du bilan -->
+    <div id="balancePage" class="page">
+        <div class="navigation">
+            <div class="nav-title" id="title-balance">Bilan P&L</div>
+            <button class="back-btn" onclick="showPage('mainPage')">← Retour</button>
+        </div>
+        <div class="page-content">
+            <div class="input-group">
+                <label for="initialCapital" id="label-initial-capital">Capital Initial (€)</label>
+                <input type="number" id="initialCapital" value="300" onchange="updateProfitCalculations()">
+            </div>
+            <div class="input-group">
+                <label for="totalMisesReparties" id="label-total-bet">Total Mises Réparties (€)</label>
+                <input type="number" id="totalMisesReparties" readonly>
+            </div>
+            <div class="input-group">
+                <label for="totalProfitLoss" id="label-total-profit">Total Profit/Perte (€)</label>
+                <input type="number" id="totalProfitLoss" readonly>
+            </div>
+            <div class="input-group">
+                <label for="profitRate" id="label-profit-rate">Taux de Profit (%)</label>
+                <input type="number" id="profitRate" readonly>
+            </div>
+            <table id="profitLossTable">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th id="th-start-date">Date Début</th>
+                        <th id="th-end-date">Date Fin</th>
+                        <th id="th-start-budget">Budget Début (€)</th>
+                        <th id="th-end-budget">Budget Fin (€)</th>
+                        <th id="th-profit">Profit (€)</th>
+                        <th id="th-profit-rate">Taux Profit (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="profitLossTableBody">
+                    <!-- Les lignes seront ajoutées dynamiquement -->
+                </tbody>
+            </table>
+            <button class="btn" onclick="addProfitLossRow()" id="btn-add-row">Ajouter une Ligne</button>
+        </div>
+    </div>
+
+    <!-- Page des archives générales -->
+    <div id="archivesPage" class="page">
+        <div class="navigation">
+            <div class="nav-title" id="title-archives">Archives Générales</div>
+            <button class="back-btn" onclick="showPage('mainPage')">← Retour</button>
+        </div>
+        <div class="page-content">
+            <div class="dropdown-container">
+                <select id="generalArchivesDropdown" class="dropdown" onchange="displayGeneralArchivedResults()">
+                    <option value="">Sélectionnez une fiche de synthèse</option>
+                </select>
+                <button id="deleteGeneralArchiveBtn" class="btn" onclick="deleteGeneralArchive()" disabled id="btn-delete-archive">Supprimer Archives Général</button>
+            </div>
+            <div id="generalArchivedResults" class="general-archives-container"></div>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h3 id="popupTitle">Message</h3>
+            <p id="popupMessage"></p>
+            <button class="close-popup" onclick="closePopup()">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Panel d'administration -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="admin-panel-content">
+            <h3 id="title-admin-panel">Panel d'Administration</h3>
+            <div class="admin-form">
+                <input type="password" id="adminCodeInput" placeholder="Code secret administrateur">
+                <button onclick="verifyAdminCode()" id="btn-verify-admin">Accéder au panel</button>
+            </div>
+            <div id="adminContent" style="display: none;">
+                <h4 id="title-user-management">Gestion des utilisateurs</h4>
+                <div class="admin-form">
+                    <input type="text" id="newUserName" placeholder="Nom de l'utilisateur">
+                    <input type="tel" id="newUserPhone" placeholder="Numéro de téléphone">
+                    <button onclick="addUser()" id="btn-add-user">Ajouter utilisateur</button>
+                </div>
+                <div class="users-list" id="usersList">
+                    <!-- Liste des utilisateurs -->
+                </div>
+                <button class="close-popup" onclick="closeAdminPanel()" style="margin-top: 20px;" id="btn-close-admin">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton Paramètres (Administration) -->
+    <div class="settings-btn" onclick="openAdminPanel()">⚙️</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
